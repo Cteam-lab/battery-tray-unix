@@ -27,15 +27,15 @@ class BatteryTray:
             print "No battery found!"
             sys.exit(1)
 
-        self.BATT_FULL = os.path.join(battery_path, "charge_full")
-        self.BATT_NOW = os.path.join(battery_path, "charge_now")
+        self.battery_full = os.path.join(battery_path, "charge_full")
+        self.battery_charging = os.path.join(battery_path, "charge_now")
 
-        if not os.path.exists(self.BATT_FULL):
-            self.BATT_FULL = os.path.join(battery_path, "energy_full")
-            self.BATT_NOW = os.path.join(battery_path, "energy_now")
+        if not os.path.exists(self.battery_full):
+            self.battery_full = os.path.join(battery_path, "energy_full")
+            self.battery_charging = os.path.join(battery_path, "energy_now")
 
         self.BATT_STATE = os.path.join(battery_path, "status")
-        self.IMAGE_LOC = os.path.join(os.path.dirname(sys.argv[0]), "images/battery")
+        self.image_location = os.path.join(os.path.dirname(sys.argv[0]), "images/battery")
 
         self.tray = Gtk.StatusIcon()
         self.tray.connect('activate', self.refresh)
@@ -87,9 +87,9 @@ class BatteryTray:
             f = open(filename)
             return f.read()
 
-        b_level = int(round(float(slurp(self.BATT_NOW)) / float(slurp(self.BATT_FULL)) * 100))
-        b_file = self.IMAGE_LOC + "." + str(b_level / 10) + ".png"
-        print slurp(self.BATT_STATE)
+        b_level = int(round(float(slurp(self.battery_charging)) / float(slurp(self.battery_full)) * 100))
+        b_file = self.image_location + "." + str(b_level / 10) + ".png"
+        
         self.tray.set_tooltip_text(
             "%s: %d%%" %
             (rstrip(slurp(self.BATT_STATE)), b_level)
