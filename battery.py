@@ -34,7 +34,7 @@ class BatteryTray:
             self.battery_full = os.path.join(battery_path, "energy_full")
             self.battery_charging = os.path.join(battery_path, "energy_now")
 
-        self.BATT_STATE = os.path.join(battery_path, "status")
+        self.battery_state = os.path.join(battery_path, "status")
         self.image_location = os.path.join(os.path.dirname(sys.argv[0]), "images/battery")
 
         self.tray = Gtk.StatusIcon()
@@ -92,7 +92,7 @@ class BatteryTray:
         
         self.tray.set_tooltip_text(
             "%s: %d%%" %
-            (rstrip(slurp(self.BATT_STATE)), b_level)
+            (rstrip(slurp(self.battery_state)), b_level)
         )
 
         if os.path.exists(b_file):
