@@ -10,6 +10,9 @@ import sys
 
 
 class BatteryTray:
+
+    interval = 20000
+
     def __init__(self):
 
         battery_path = None
@@ -23,8 +26,6 @@ class BatteryTray:
         if not battery_path:
             print "No battery found!"
             sys.exit(1)
-
-        INTERVAL = 20000
 
         self.BATT_FULL = os.path.join(battery_path, "charge_full")
         self.BATT_NOW = os.path.join(battery_path, "charge_now")
@@ -57,7 +58,8 @@ class BatteryTray:
         self.refresh(None)
         self.tray.set_visible(True)
 
-        GObject.timeout_add(INTERVAL, self.refresh, False)
+        ## keep looking <:
+        GObject.timeout_add(self.interval, self.refresh, False)
 
     def show_menu(self, widget, event_button, event_time, menu):
         menu.popup(None, None,
@@ -87,7 +89,7 @@ class BatteryTray:
 
         b_level = int(round(float(slurp(self.BATT_NOW)) / float(slurp(self.BATT_FULL)) * 100))
         b_file = self.IMAGE_LOC + "." + str(b_level / 10) + ".png"
-
+        print slurp(self.BATT_STATE)
         self.tray.set_tooltip_text(
             "%s: %d%%" %
             (rstrip(slurp(self.BATT_STATE)), b_level)
