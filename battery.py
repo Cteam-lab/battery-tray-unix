@@ -18,8 +18,10 @@ class BatteryTray:
         battery_path = None
         self.theme_switcher_window = Gtk.Window(title="Theme Switcher")
         self.theme_switcher_window.set_position(Gtk.WindowPosition.CENTER)
+        self.theme_switcher_window.connect('delete-event', lambda w, e: w.hide() or True)
+        #self.theme_switcher_window.set_resizable(False)
         self.theme_switcher_window.set_border_width(10)
-        self.theme_switcher_window.set_default_size(200, 20)
+        self.theme_switcher_window.set_default_size(300, 20)
 
         self.config = ConfigParser.RawConfigParser()
         self.config.read('config/config.cfg')
