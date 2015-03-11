@@ -67,7 +67,6 @@ class BatteryTray:
 
         self.battery_state = os.path.join(battery_path, "status")
         self.image_location = os.path.join(os.path.dirname(sys.argv[0]), self.theme + "/battery")
-
         self.tray = Gtk.StatusIcon()
         self.tray.connect('activate', self.refresh)
 
