@@ -113,7 +113,6 @@ class BatteryTray:
             self.save_default(theme)
             self.image_location = os.path.join(os.path.dirname(sys.argv[0]), self.theme + "/battery")
             self.refresh(None)
-            self.theme_switcher_window.hide()
 
     def show_menu(self, widget, event_button, event_time, menu):
         menu.popup(None, None,
